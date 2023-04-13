@@ -17,11 +17,15 @@ jobs:
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1
+        dotnet-version: '6.0.401'
 
     # publishes Blazor project to the release-folder
     - name: Publish .NET Core Project
-      run: dotnet publish m5_Entregable8.csproj -c Release -o release --nologo
+      #run: dotnet publish m5_Entregable8.csproj -c Release -o release --nologo
+      run: |
+        dotnet restore
+        dotnet build 
+        dotnet publish --configuration Release --self-contained -r linux-x64 -o release
     
     # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
     - name: Change base-tag in index.html from / to BlazorGitHubPagesDemo
